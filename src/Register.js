@@ -1,8 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
-
+import {API_ROOT} from './constants'
 const FormItem = Form.Item;
-
 class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
@@ -13,7 +12,7 @@ class RegistrationForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                fetch(`URL`, {
+                fetch(`${API_ROOT}/signup`, {
                     method: 'POST',
                     body: JSON.stringify({
                         username: values.username,
