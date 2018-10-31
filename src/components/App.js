@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../styles/App.css';
 import {TopBar} from "./TopBar"
 import {Main} from "./Main"
 

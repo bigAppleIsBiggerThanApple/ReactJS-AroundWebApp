@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
-import {API_ROOT} from './constants'
+import {API_ROOT} from '../constants'
 const FormItem = Form.Item;
 class RegistrationForm extends React.Component {
     state = {
