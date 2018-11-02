@@ -6,6 +6,7 @@ import {POS_KEY} from "../constants"
 import {API_ROOT} from "../constants"
 import {AUTH_HEADER} from "../constants"
 import {TOKEN_KEY} from "../constants"
+import {Gallery} from "./Gallery"
 
 const TabPane = Tabs.TabPane;
 
@@ -63,13 +64,25 @@ export class Home extends React.Component{
         });
     }
     getImagePosts = () => {
-        const {error, isLoadingGeoLocation, isLoadingPosts} = this.state;
+        const {error, isLoadingGeoLocation, isLoadingPosts, posts} = this.state;
         if (error){
             return <div>{error}</div>
         }else if (isLoadingGeoLocation){
             return <Spin tip='Loading geo location...'/>
         }else if (isLoadingPosts){
             return <Spin tip='Loading posts...'/>
+        }else if (posts.length > 0){
+            const images = this.state.posts.map((post) => {
+                return {
+                    user: post.user,
+                    src: post.url,
+                    thumbnail: post.url,
+                    caption: post.message,
+                    thumbnailWidth: 400,
+                    thumbnailHeight: 300,
+                }
+            })
+            return (<Gallery images={images}/>)
         }
         else{
             return 'Content of tab 1'
