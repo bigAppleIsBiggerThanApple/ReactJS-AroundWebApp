@@ -18,7 +18,7 @@ class RegistrationForm extends React.Component {
                     method: 'POST',
                     body: JSON.stringify({
                         username: values.username,
-                        password: values.password,
+                        password: values.password
                     }),
                 }).then((response) => {
                     if (response.ok) {
