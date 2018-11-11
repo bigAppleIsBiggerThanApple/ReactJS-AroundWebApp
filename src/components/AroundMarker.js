@@ -16,7 +16,8 @@ export class AroundMarker extends React.Component{
     }
 
     render(){
-        const {lat, lng} = this.props.position;
+        const{user, message, url, location} = this.props.post;
+        const {lat, lon : lng} = location;
         return(
             <Marker
                 position={{ lat: lat, lng: lng }}
@@ -24,7 +25,10 @@ export class AroundMarker extends React.Component{
                 onMouseOut={this.toggleOpen}
             >
                 {this.state.isOpen ? <InfoWindow>
-                    <div>content</div>
+                    <div>
+                        <img src={url} alt={message} className="around-marker-image"/>
+                        <p>{`${user}: ${message}`}</p>
+                    </div>
                 </InfoWindow> : null}
 
             </Marker>
