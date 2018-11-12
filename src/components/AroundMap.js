@@ -12,12 +12,27 @@ class NormalAroundMap extends React.Component{
 
     reloadMarkers= () => {
         const center = this.getCenter();
-        this.props.loadNearbyPosts(center);
+        const radius = this.getRadius();
+        this.props.loadNearbyPosts(center, radius);
     }
     getCenter = () => {
         const center = this.map.getCenter();
         return {lat: center.lat(), lon: center.lng()}
     }
+    //根据图中心点到边的距离
+    getRadius = () => {
+        const center = this.map.getCenter();
+        const bounds = this.map.getBounds();
+        if (center && bounds) {
+            const ne = bounds.getNorthEast();
+            const right = new window.google.maps.LatLng(center.lat(), ne.lng());
+            return 0.001 * window.google.maps.geometry.spherical.computeDistanceBetween(center, right);
+        }
+    }
+
+
+
+
     getMapRef = (mapInstance) =>{
         this.map = mapInstance
     }
@@ -33,7 +48,8 @@ class NormalAroundMap extends React.Component{
 
                 onDragEnd={this.reloadMarkers}
                 //在dragEnd的时候要loadNearbyPosts，并且要把中心改变。
-
+                //zoom的时候也要change center
+                onZoomChanged={this.reloadMarkers}
             >
                 {this.props.posts.map((post)=> <AroundMarker post={post} key={post.url}/>)}
             </GoogleMap>
