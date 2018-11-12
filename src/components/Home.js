@@ -39,8 +39,8 @@ export class Home extends React.Component {
         this.setState({ isLoadingGeoLocation: false, error: 'Failed to load geolocation.' });
     }
 
-    loadNearbyPosts = () => {
-        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+    loadNearbyPosts = (center) => {
+        const { lat, lon } = center ? center : JSON.parse(localStorage.getItem(POS_KEY));
         const token = localStorage.getItem(TOKEN_KEY);
         this.setState({ isLoadingPosts: true, error: '' });
         return fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`, {
@@ -102,6 +102,7 @@ export class Home extends React.Component {
                            containerElement={<div style={{ height: `800px` }} />}
                            mapElement={<div style={{ height: `100%` }} />}
                            posts={this.state.posts}
+                           loadNearbyPosts={this.loadNearbyPosts}
                 />
                 </TabPane>
             </Tabs>
